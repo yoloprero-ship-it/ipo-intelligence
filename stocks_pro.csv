@@ -1,0 +1,21 @@
+Sector,Company,Ticker,Weight,MarketCap
+Auto,Ashok Leyland,ASHOKLEY.NS,1.2,Mid
+Auto,Bharat Forge,BHARATFORG.NS,1.1,Mid
+IT,Coforge,COFORGE.NS,1.5,Mid
+IT,Persistent Systems,PERSISTENT.NS,1.4,Mid
+Pharma,Alkem Labs,ALKEM.NS,0.9,Mid
+Pharma,Laurus Labs,LAURUSLABS.NS,1.0,Mid
+Banking,AU Small Finance Bank,AUBANK.NS,1.3,Mid
+Banking,Federal Bank,FEDERALBNK.NS,1.6,Mid
+FMCG,Dabur,DABUR.NS,1.2,Large
+FMCG,Marico,MARICO.NS,1.1,Large
+Energy,GAIL,GAIL.NS,1.3,Large
+Energy,ONGC,ONGC.NS,1.5,Large
+Infra,IRCTC,IRCTC.NS,1.4,Mid
+Infra,NBCC,NBCC.NS,0.8,Small
+Chemicals,Deepak Nitrite,DEEPAKNTR.NS,1.2,Mid
+Chemicals,PI Industries,PIIND.NS,1.3,Mid
+Realty,DLF,DLF.NS,1.6,Large
+Realty,Oberoi Realty,OBEROIRLTY.NS,1.1,Mid
+Capital Goods,ABB India,ABB.NS,1.7,Large
+Capital Goods,BHEL,BHEL.NS,1.2,Mid
