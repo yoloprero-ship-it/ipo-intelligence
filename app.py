@@ -31,12 +31,25 @@ stock = st.selectbox("Select Stock", sectors[sector])
 
 # ---------------- LIVE DATA ----------------
 @st.cache_data
+@st.cache_data
 def get_data(ticker):
-    data = yf.download(ticker, period="6mo", progress=False)
-    return data
+    try:
+        data = yf.download(ticker, period="6mo", progress=False)
 
+        if data is None or data.empty:
+            return None
+
+        return data
+
+    except Exception as e:
+        return None
 data = get_data(stock)
-
+if data is None:
+    st.error("⚠️ No data fetched. Try another stock or refresh.")
+    st.stop() 
+    if data is None:
+    data = yf.download("^NSEI", period="6mo", progress=False) 
+    st.write("Data Preview:", data.head())
 # ---------------- VOLATILITY ----------------
 def compute_garch(returns):
     try:
