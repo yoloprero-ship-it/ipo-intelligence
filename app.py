@@ -42,11 +42,14 @@ def get_data(ticker):
     except Exception as e:
         return None
 data = get_data(stock)
+
 if data is None:
-    st.error("⚠️ No data fetched. Try another stock or refresh.")
-    st.stop() 
-    if data is None:
-    data = yf.download("^NSEI", period="6mo", progress=False) 
+    st.warning("Primary data failed, using fallback")
+    data = yf.download("^NSEI", period="6mo", progress=False)
+
+if data is None or data.empty:
+    st.error("No data available")
+    st.stop()
     st.write("Data Preview:", data.head())
 # ---------------- VOLATILITY ----------------
 def compute_garch(returns):
