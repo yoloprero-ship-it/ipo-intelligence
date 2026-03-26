@@ -42,11 +42,9 @@ def get_data(ticker):
     except Exception as e:
         return None
 data = get_data(stock)
-
 if data is None:
     st.warning("Primary data failed, using fallback")
     data = yf.download("^NSEI", period="6mo", progress=False)
-
 if data is None or data.empty:
     st.error("No data available")
     st.stop()
