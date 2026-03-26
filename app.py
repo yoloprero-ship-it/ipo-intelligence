@@ -163,4 +163,58 @@ if st.button("Learn Concepts"):
 # ---------------- EXPORT ----------------
 if st.button("Export Data"):
     sens_df.to_csv("analysis.csv")
-    st.success("Downloaded")
+    st.success("Downloaded") 
+df = pd.read_csv("stocks_pro.csv") 
+market_cap = st.selectbox("Select Market Cap", ["All","Large","Mid","Small"])
+
+if market_cap != "All":
+    df = df[df["MarketCap"] == market_cap] 
+sector = st.selectbox("Select Sector", df["Sector"].unique())
+filtered = df[df["Sector"] == sector]
+
+company = st.selectbox("Select Company", filtered["Company"])
+ticker = filtered[filtered["Company"] == company]["Ticker"].values[0] 
+def calculate_volatility(ticker):
+    data = yf.download(ticker, period="3mo", progress=False)
+    returns = data['Close'].pct_change().dropna()
+    return returns.std()
+
+df["Volatility"] = df["Ticker"].apply(calculate_volatility)
+
+vol_filter = st.slider("Volatility Threshold", 0.0, 0.1, 0.03)
+
+df = df[df["Volatility"] <= vol_filter] 
+def get_returns(ticker):
+    data = yf.download(ticker, period="5d", progress=False)
+    return (data['Close'][-1] - data['Close'][0]) / data['Close'][0]
+
+df["Returns"] = df["Ticker"].apply(get_returns)
+
+top_gainers = df.sort_values("Returns", ascending=False).head(5)
+top_losers = df.sort_values("Returns").head(5)
+
+st.subheader("🚀 Top Gainers")
+st.dataframe(top_gainers)
+
+st.subheader("📉 Top Losers")
+st.dataframe(top_losers) 
+import plotly.express as px
+
+sector_perf = df.groupby("Sector")["Returns"].mean().reset_index()
+
+fig = px.bar(
+    sector_perf,
+    x="Sector",
+    y="Returns",
+    color="Returns",
+    title="Sector Performance Heatmap"
+)
+
+st.plotly_chart(fig) 
+def sensitivity(returns):
+    shocks = [-0.02, -0.01, 0.01, 0.02]
+    return [returns.mean() + s for s in shocks]
+
+sens = sensitivity(returns)
+
+st.write("Sensitivity:", sens)
