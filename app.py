@@ -36,9 +36,8 @@ def get_data(ticker):
     try:
         data = yf.download(ticker, period="6mo", progress=False)
 
-        if data is None:
+       if data is None:
     data = yf.download("^NSEI", period="6mo", progress=False)
-        return data
 
     except Exception as e:
         return None
